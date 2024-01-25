@@ -1,0 +1,9 @@
+[submodule "gui/bx"]
+	path = gui/bx
+	url = https://github.com/bkaradzic/bx.git
+[submodule "gui/bimg"]
+	path = gui/bimg
+	url = https://github.com/bkaradzic/bimg.git
+[submodule "gui/bgfx"]
+	path = gui/bgfx
+	url = https://github.com/bkaradzic/bgfx.git
