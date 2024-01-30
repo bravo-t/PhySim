@@ -13,6 +13,8 @@ project(nbody)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # Dependencies
+file(COPY ${CMAKE_CURRENT_BINARY_DIR}/../gui/raylib/raylib/raylib-config-version.cmake
+          DESTINATION "${PROJECT_SOURCE_DIR}/../gui/raylib/cmake")
 set(raylib_USE_STATIC_LIBS ON)
 set(raylib_DIR "${PROJECT_SOURCE_DIR}/../gui/raylib/cmake")
 set(raylib_VERBOSE 1)

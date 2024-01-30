@@ -34,3 +34,4 @@
 # Compile directory
 build/
 compile/
+gui/
