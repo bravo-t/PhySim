@@ -1,0 +1,71 @@
+#include <fstream>
+#include <cassert>
+#include <vector>
+#include <cstring>
+#include "Universe.h"
+
+namespace NBody {
+
+Universe::Universe(const char* worldFile)
+{
+  buildFromFile(worldFile);
+}
+
+void 
+Universe::buildFromFile(const char* worldFile)
+{
+  std::ifstream infile("thefile.txt");
+  if (!infile) {
+    printf("ERROR: Cannot open %s\n", worldFile);
+    return;
+  }
+  std::string line;
+  size_t numPlanets = 0;
+  double r = .0;
+  if (std::getline(infile, line)) {
+    numPlanets = std::stoul(line);
+  }
+  if (std::getline(infile, line)) {
+    r = std::stod(line);
+  }
+  while (std::getline(infile, line)) {
+    addPlanet(line);
+  }
+  assert(numPlanets == _planets.size());
+  _radius = r;
+  printf("Universe built with input file %s, %lu planets created\n", worldFile, numPlanets);
+}
+
+inline void 
+splitWithAny(const std::string& src, const char *delim,
+             std::vector<std::string> &strs)
+{
+  char *data = strdup(src.data());
+  strs.clear();
+  char *saveptr(nullptr);
+  if (char* res1 = strtok_r(data, delim, &saveptr)) {
+    strs.push_back(res1);
+    while(char *res2 = strtok_r(nullptr, delim, &saveptr)) {
+      strs.push_back(std::string(res2));
+    }
+  }
+  ::free(data);
+}
+
+void
+Universe::addPlanet(const std::string& line)
+{
+  std::vector<std::string> strs;
+  splitWithAny(line, " ", strs);
+  if (strs.size() != 5) {
+    return;
+  }
+  Planet p(strs[5]);
+  p.setCoordinate(std::stod(strs[0]), std::stod(strs[1]));
+  p.setVelocity(std::stod(strs[2]), std::stod(strs[3]));
+  p.setMass(std::stod(strs[4]));
+  _planets.push_back(p);
+}
+
+
+}
