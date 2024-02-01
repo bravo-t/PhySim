@@ -34,5 +34,5 @@
 # Compile directory
 build/
 compile/
-gui/
+gui/raylib/
 .vscode/
