@@ -20,22 +20,74 @@
 *   Copyright (c) 2013-2024 Ramon Santamaria (@raysan5)
 *
 ********************************************************************************************/
-
+#include <cctype>
+#include <unistd.h>
+#include <cstdlib>
+#include <cstdio>
 #include "raylib.h"
 
+struct InvokeOptions {
+  int _screenWidth = 800;
+  int _screenHeight = 450;
+  int _fps = 60;
+  const char* _worldFile = nullptr;
+};
+
+static InvokeOptions
+processOptions(int argc, char** argv) 
+{
+  InvokeOptions opts;
+  int c;
+  while ((c = getopt (argc, argv, "w:h:f:")) != -1) {
+    switch (c) {
+      case 'w':
+        opts._screenWidth = atoi(optarg);
+        break;
+      case 'h':
+        opts._screenHeight = atoi(optarg);
+        break;
+      case 'f':
+        opts._fps = atoi(optarg);
+        break;
+      case '?':
+        if (optopt == 'w' || optopt == 'h' || optopt == 'f')
+          fprintf (stderr, "Option -w/-h/-f requires an argument.\n", optopt);
+        else if (isprint (optopt))
+          fprintf (stderr, "Unknown option `-%c'.\n", optopt);
+        else
+          fprintf (stderr,
+                   "Unknown option character `\\x%x'.\n",
+                   optopt);
+      default:
+        abort ();
+    }
+  }
+
+  if (optind < argc) {
+    opts._worldFile = argv[optind];
+  } else {
+    printf("ERROR: Name of world file is required\n");
+  }
+  return opts;
+}
 //------------------------------------------------------------------------------------
 // Program main entry point
 //------------------------------------------------------------------------------------
-int main(void)
+int 
+main(int argc, char** argv)
 {
-    // Initialization
-    //--------------------------------------------------------------------------------------
-    const int screenWidth = 800;
-    const int screenHeight = 450;
+  InvokeOptions opts = processOptions(argc, argv);
+  if (opts._worldFile == nullptr) {
+    exit(1);
+  }
+  const int screenWidth = opts._screenWidth;
+  const int screenHeight = opts._screenHeight;
 
-    InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
+  printf("Simulating %s with window size %dx%d\n", opts._worldFile, opts._screenHeight, opts._screenWidth);
 
-    SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
+  InitWindow(screenWidth, screenHeight, opts._worldFile);
+
+  SetTargetFPS(opts._fps);               // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
 
     // Main game loop

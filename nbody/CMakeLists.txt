@@ -25,14 +25,16 @@ find_package(raylib "5.0.0" REQUIRED) # QUIET or REQUIRED
 file (GLOB srcs *.cpp)
 file (GLOB headers *.h)
 
-INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR}/../gui/raylib/raylib/include)
+INCLUDE_DIRECTORIES(
+  ${PROJECT_SOURCE_DIR}/../gui
+  ${CMAKE_CURRENT_BINARY_DIR}/../gui/raylib/raylib/include)
 
-add_library(src_obj OBJECT ${srcs} ${headers})
 FOREACH(item ${srcs})
   IF(${item} MATCHES "main.cpp")
     LIST(REMOVE_ITEM srcs ${item})
   ENDIF(${item} MATCHES "main.cpp")
 ENDFOREACH(item)
+add_library(src_obj OBJECT ${srcs} ${headers})
 add_executable(${PROJECT_NAME} main.cpp)
 target_link_libraries(${PROJECT_NAME} raylib)
 
