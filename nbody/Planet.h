@@ -11,6 +11,7 @@ class Planet {
   public:
     Planet(size_t id) 
     : _id(id) {}
+    Planet(const Planet& p) = default;
 
     void setCoordinate(double x, double y, double z = .0)
     {
@@ -25,7 +26,7 @@ class Planet {
       _velocity[2] = z;
     }
     void setMass(double m) { _mass = m; }
-    std::string name(const Universe& universe);
+    std::string name(const Universe& universe) const;
     const double* coordinate() const { return _coordinate; }
     const double* velocity() const { return _velocity; }
     double mass() const {return _mass;}

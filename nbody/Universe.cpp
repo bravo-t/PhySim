@@ -31,7 +31,7 @@ Universe::buildFromFile(const char* worldFile)
   while (std::getline(infile, line)) {
     addPlanet(line);
   }
-  assert(numPlanets == _planets.size());
+  assert(numPlanets == _planetNames.size());
   _radius = r;
   printf("Universe built with input file %s, %lu planets created\n", worldFile, numPlanets);
 }

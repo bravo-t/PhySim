@@ -16,13 +16,14 @@ class Simulator {
   public:
     typedef std::deque<Planet> PlanetData;
     Simulator(SimulationMethod method = SimulationMethod::Direct);
-    PlanetData run(const PlanetData& startCond);
+    PlanetData run(const PlanetData& initCond);
 
   private:
-    PlanetData directMethod(const PlanetData& startCond);
+    PlanetData directMethod(const PlanetData& initCond);
 
   private:
-    size_t _simTickPerSecond = 1000;
+    SimulationMethod _simMethod = SimulationMethod::Direct;
+    size_t           _simTickPerSecond = 1000;
 };
 
 }
