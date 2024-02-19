@@ -2,6 +2,7 @@
 #define __NBD_RAST_H__
 
 #include <vector>
+#include <cstddef>
 #include "raylib.h"
 
 namespace NBody {

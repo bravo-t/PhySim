@@ -15,7 +15,8 @@ enum SimulationMethod {
 class Simulator {
   public:
     typedef std::deque<Planet> PlanetData;
-    Simulator(SimulationMethod method = SimulationMethod::Direct);
+    Simulator(SimulationMethod method = SimulationMethod::Direct) 
+    : _simMethod(method) {}
     PlanetData run(const PlanetData& initCond) const;
 
   private:

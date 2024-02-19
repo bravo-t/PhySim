@@ -1,6 +1,6 @@
 #include "Rasterize.h"
 #include "Universe.h"
-#include "gui/ColorGradient.h"
+#include "ColorGradient.h"
 
 namespace NBody {
 
