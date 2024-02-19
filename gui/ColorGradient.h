@@ -3,6 +3,7 @@
 
 #include <cmath>
 #include <vector>
+#include "raylib.h"
 
 class ColorGradient {
 private:
@@ -36,19 +37,21 @@ public:
   void createDefaultHeatMapGradient()
   {
     color.clear();
-    color.push_back(ColorPoint(0, 0, 1,   0.0f));      // Blue.
-    color.push_back(ColorPoint(0, 1, 1,   0.25f));     // Cyan.
-    color.push_back(ColorPoint(0, 1, 0,   0.5f));      // Green.
-    color.push_back(ColorPoint(1, 1, 0,   0.75f));     // Yellow.
-    color.push_back(ColorPoint(1, 0, 0,   1.0f));      // Red.
+    color.push_back(ColorPoint(0, 0, 255,   0.0f));      // Blue.
+    color.push_back(ColorPoint(0, 255, 255,   0.25f));     // Cyan.
+    color.push_back(ColorPoint(0, 255, 0,   0.5f));      // Green.
+    color.push_back(ColorPoint(255, 255, 0,   0.75f));     // Yellow.
+    color.push_back(ColorPoint(255, 0, 0,   1.0f));      // Red.
   }
   
   //-- Inputs a (value) between 0 and 1 and outputs the (red), (green) and (blue)
   //-- values representing that position in the gradient.
-  void getColorAtValue(const float value, float &red, float &green, float &blue)
+  Color getColorAtValue(const float value)
   {
+    Color c{0, 0, 0, 255};
+    
     if(color.size()==0)
-      return;
+      return c;
     
     for(int i=0; i<color.size(); i++)
     {
@@ -58,16 +61,16 @@ public:
         ColorPoint &prevC  = color[colorIndex];
         float valueDiff    = (prevC.val - currC.val);
         float fractBetween = (valueDiff==0) ? 0 : (value - currC.val) / valueDiff;
-        red   = (prevC.r - currC.r)*fractBetween + currC.r;
-        green = (prevC.g - currC.g)*fractBetween + currC.g;
-        blue  = (prevC.b - currC.b)*fractBetween + currC.b;
-        return;
+        c.r   = (prevC.r - currC.r)*fractBetween + currC.r;
+        c.g = (prevC.g - currC.g)*fractBetween + currC.g;
+        c.b  = (prevC.b - currC.b)*fractBetween + currC.b;
+        return c;
       }
     }
-    red   = color.back().r;
-    green = color.back().g;
-    blue  = color.back().b;
-    return;
+    c.r   = color.back().r;
+    c.g = color.back().g;
+    c.b  = color.back().b;
+    return c;
   }
 };
 #endif

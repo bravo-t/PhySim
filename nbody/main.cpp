@@ -25,6 +25,9 @@
 #include <cstdlib>
 #include <cstdio>
 #include "raylib.h"
+#include "Universe.h"
+#include "Simulator.h"
+#include "Rasterize.h"
 
 struct InvokeOptions {
   int _screenWidth = 800;
@@ -87,33 +90,31 @@ main(int argc, char** argv)
 
   InitWindow(screenWidth, screenHeight, opts._worldFile);
 
-  SetTargetFPS(opts._fps);               // Set our game to run at 60 frames-per-second
-    //--------------------------------------------------------------------------------------
+  SetTargetFPS(opts._fps);
 
-    // Main game loop
-    while (!WindowShouldClose())    // Detect window close button or ESC key
-    {
-        // Update
-        //----------------------------------------------------------------------------------
-        // TODO: Update your variables here
-        //----------------------------------------------------------------------------------
+  ::NBody::Universe univserse(opts._worldFile);
+  ::NBody::Simulator simulator;
 
-        // Draw
-        //----------------------------------------------------------------------------------
-        BeginDrawing();
+  while (!WindowShouldClose()) {
+    univserse.simulate(simulator);
+    const std::vector<Color> pixels = ::NBody::rasterize(opts._screenWidth, opts._screenHeight, univserse);
+    BeginDrawing();
+    
+    ClearBackground(BLACK);
 
-            ClearBackground(RAYWHITE);
-
-            DrawText("Congrats! You created your first window!", 190, 200, 20, LIGHTGRAY);
-
-        EndDrawing();
-        //----------------------------------------------------------------------------------
+    for (size_t y=0; y<opts._screenHeight; ++y) {
+      for (size_t x=0; x<opts._screenWidth; ++x) {
+        size_t index = y * opts._screenWidth + x;
+        DrawPixel(x, y, pixels[index]);
+      }
     }
 
-    // De-Initialization
-    //--------------------------------------------------------------------------------------
-    CloseWindow();        // Close window and OpenGL context
-    //--------------------------------------------------------------------------------------
+    DrawFPS(opts._screenWidth - 10, opts._screenHeight - 10);
 
-    return 0;
+    EndDrawing();
+  }
+
+  CloseWindow(); 
+
+  return 0;
 }
