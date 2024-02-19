@@ -7,16 +7,20 @@
 
 namespace NBody {
 
+class Simulator;
+
 class Universe {
   public:
     Universe(const char* worldFile);
-    void simulate();
+    std::string planetName(size_t planetId) const { return _planetNames[planetId]; }
+    void simulate(const Simulator& sim);
   private:
     void buildFromFile(const char* worldFile);
     void addPlanet(const std::string& fileLine);
   private:
     double _radius = .0;
-    std::deque<Planet> _planets;
+    std::deque<std::string> _planetNames;
+    std::deque<Planet>      _planetData;
 };
 
 

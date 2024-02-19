@@ -5,10 +5,12 @@
 
 namespace NBody {
 
+class Universe;
+
 class Planet {
   public:
-    Planet(const std::string& name) 
-    : _name(name) {}
+    Planet(size_t id) 
+    : _id(id) {}
 
     void setCoordinate(double x, double y, double z = .0)
     {
@@ -23,13 +25,13 @@ class Planet {
       _velocity[2] = z;
     }
     void setMass(double m) { _mass = m; }
-    std::string name() const { return _name; }
+    std::string name(const Universe& universe);
     const double* coordinate() const { return _coordinate; }
     const double* velocity() const { return _velocity; }
     double mass() const {return _mass;}
   
   private:
-    std::string _name;
+    size_t _id = static_cast<size_t>(-1);
     double _coordinate[3] = {.0};
     double _velocity[3] = {.0};
     double _mass = .0;

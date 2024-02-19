@@ -60,11 +60,13 @@ Universe::addPlanet(const std::string& line)
   if (strs.size() != 5) {
     return;
   }
-  Planet p(strs[5]);
+  size_t planetId = _planetData.size();
+  _planetNames.push_back(strs[5]);
+  Planet p(planetId);
   p.setCoordinate(std::stod(strs[0]), std::stod(strs[1]));
   p.setVelocity(std::stod(strs[2]), std::stod(strs[3]));
   p.setMass(std::stod(strs[4]));
-  _planets.push_back(p);
+  _planetData.push_back(p);
 }
 
 
