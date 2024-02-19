@@ -12,13 +12,13 @@ Universe::Universe(const char* worldFile)
   buildFromFile(worldFile);
 }
 
-void 
+bool
 Universe::buildFromFile(const char* worldFile)
 {
-  std::ifstream infile("thefile.txt");
+  std::ifstream infile(worldFile);
   if (!infile) {
     printf("ERROR: Cannot open %s\n", worldFile);
-    return;
+    return false;
   }
   std::string line;
   size_t numPlanets = 0;
@@ -32,9 +32,13 @@ Universe::buildFromFile(const char* worldFile)
   while (std::getline(infile, line)) {
     addPlanet(line);
   }
-  assert(numPlanets == _planetNames.size());
+  if (numPlanets != _planetData.size()) {
+    printf("ERROR: Build imcomplete, %lu planets added, expected %lu\n", _planetData.size(), numPlanets);
+    exit(1);
+  }
   _radius = r;
   printf("Universe built with input file %s, %lu planets created\n", worldFile, numPlanets);
+  return true;
 }
 
 inline void 
@@ -58,7 +62,7 @@ Universe::addPlanet(const std::string& line)
 {
   std::vector<std::string> strs;
   splitWithAny(line, " ", strs);
-  if (strs.size() != 5) {
+  if (strs.size() != 6) {
     return;
   }
   size_t planetId = _planetData.size();

@@ -18,7 +18,7 @@ class Universe {
     double radius() const { return _radius; }
 
   private:
-    void buildFromFile(const char* worldFile);
+    bool buildFromFile(const char* worldFile);
     void addPlanet(const std::string& fileLine);
 
   private:
