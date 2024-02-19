@@ -3,6 +3,7 @@
 #include <vector>
 #include <cstring>
 #include "Universe.h"
+#include "Simulator.h"
 
 namespace NBody {
 
@@ -67,6 +68,13 @@ Universe::addPlanet(const std::string& line)
   p.setVelocity(std::stod(strs[2]), std::stod(strs[3]));
   p.setMass(std::stod(strs[4]));
   _planetData.push_back(p);
+}
+
+void
+Universe::simulate(const Simulator& sim)
+{
+  std::deque<Planet> nextState = sim.run(_planetData);
+  nextState.swap(_planetData);
 }
 
 

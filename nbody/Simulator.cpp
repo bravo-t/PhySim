@@ -63,7 +63,7 @@ explicitEulerTick(const PlanetData& stepCond, double simTick,
 }
 
 PlanetData
-Simulator::directMethod(const PlanetData& startCond)
+Simulator::directMethod(const PlanetData& startCond) const
 {
   double simTick = 1 / _simTickPerSecond;
   PlanetData nextStep(startCond.begin(), startCond.end());
@@ -76,7 +76,7 @@ Simulator::directMethod(const PlanetData& startCond)
 }
 
 PlanetData
-Simulator::run(const PlanetData& initCond) 
+Simulator::run(const PlanetData& initCond) const
 {
   switch (_simMethod) {
     case SimulationMethod::Direct:
