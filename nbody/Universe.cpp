@@ -31,6 +31,9 @@ Universe::buildFromFile(const char* worldFile)
   }
   while (std::getline(infile, line)) {
     addPlanet(line);
+    if (_planetData.size() == numPlanets) {
+      break;
+    }
   }
   if (numPlanets != _planetData.size()) {
     printf("ERROR: Build imcomplete, %lu planets added, expected %lu\n", _planetData.size(), numPlanets);
@@ -69,7 +72,7 @@ Universe::addPlanet(const std::string& line)
   _planetNames.push_back(strs[5]);
   Planet p(planetId);
   p.setCoordinate(std::stod(strs[0]), std::stod(strs[1]));
-  p.setVelocity(std::stod(strs[2]), std::stod(strs[3]));
+  p.setVelocity(std::stod(strs[2])*_velocityScale, std::stod(strs[3])*_velocityScale);
   p.setMass(std::stod(strs[4]));
   _planetData.push_back(p);
 }

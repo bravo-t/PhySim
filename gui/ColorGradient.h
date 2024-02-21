@@ -67,9 +67,9 @@ public:
         return c;
       }
     }
-    c.r   = color.back().r;
+    c.r = color.back().r;
     c.g = color.back().g;
-    c.b  = color.back().b;
+    c.b = color.back().b;
     return c;
   }
 };

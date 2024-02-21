@@ -38,7 +38,7 @@ acceleration(size_t planetId, const PlanetData& stepCond,
   }
 }
 
-PlanetData
+void
 explicitEulerTick(const PlanetData& stepCond, double simTick,
                   PlanetData& nextStep)
 {

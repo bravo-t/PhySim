@@ -24,7 +24,7 @@ class Simulator {
 
   private:
     SimulationMethod _simMethod = SimulationMethod::Direct;
-    size_t           _simTickPerSecond = 1000;
+    size_t           _simTickPerSecond = 1;
 };
 
 }

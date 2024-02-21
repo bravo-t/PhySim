@@ -9,7 +9,14 @@ namespace NBody {
 
 class Universe;
 
-std::vector<Color> rasterize(size_t width, size_t height, const Universe& universe);
+void rasterize(size_t width, size_t height, const Universe& universe, Color* pixels);
+
+
+void
+drawFrame(size_t width, size_t height, 
+          const Universe& universe, 
+          RenderTexture2D renderData, 
+          Camera2D camera);
 
 }
 
