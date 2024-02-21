@@ -16,7 +16,8 @@ void
 drawFrame(size_t width, size_t height, 
           const Universe& universe, 
           RenderTexture2D renderData, 
-          Camera2D camera);
+          Camera2D camera,
+          size_t circleSize = 2);
 
 }
 

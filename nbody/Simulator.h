@@ -18,6 +18,7 @@ class Simulator {
     Simulator(SimulationMethod method = SimulationMethod::Direct) 
     : _simMethod(method) {}
     PlanetData run(const PlanetData& initCond) const;
+    void setSimTick(size_t tick) { _simTickPerSecond = tick; }
 
   private:
     PlanetData directMethod(const PlanetData& initCond) const;

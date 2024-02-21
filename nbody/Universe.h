@@ -23,7 +23,6 @@ class Universe {
 
   private:
     double _radius = .0;
-    size_t _velocityScale = 1000;
     std::deque<std::string> _planetNames;
     std::deque<Planet>      _planetData;
 };

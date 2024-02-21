@@ -64,7 +64,7 @@ struct DrawPosEqual {
 };
 
 void
-drawFrame(size_t width, size_t height, const Universe& universe, RenderTexture2D renderData, Camera2D camera)
+drawFrame(size_t width, size_t height, const Universe& universe, RenderTexture2D renderData, Camera2D camera, size_t circleSize)
 {
   std::unordered_map<DrawPos, size_t, HashDrawPos, DrawPosEqual> drawDataMap;
   const std::deque<Planet>& planets = universe.planetData();
@@ -93,7 +93,7 @@ drawFrame(size_t width, size_t height, const Universe& universe, RenderTexture2D
       for (const auto& kv : drawDataMap) {
         Color c = colorPicker.getColorAtValue(1.0 * kv.second / planets.size());
         //printf("Adding planet on %lux%lu\n");
-        DrawCircleGradient(kv.first.x, kv.first.y, 2, c, Fade(c, 0.1));
+        DrawCircleGradient(kv.first.x, kv.first.y, circleSize, c, Fade(c, 0.1));
       }
     EndMode2D();
   EndTextureMode();

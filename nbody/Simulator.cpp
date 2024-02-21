@@ -13,12 +13,12 @@ static inline void
 updateAcceleration(const Planet& planet, const Planet& other, 
                    double& accX, double& accY)
 {
-  double coorXDiff = planet.coordinate()[0] - other.coordinate()[0];
-  double coorYDiff = planet.coordinate()[1] - other.coordinate()[1];
+  double coorXDiff = other.coordinate()[0] - planet.coordinate()[0];
+  double coorYDiff = other.coordinate()[1] - planet.coordinate()[1];
   double rSquared = coorXDiff * coorXDiff + coorYDiff * coorYDiff;
   double rSqrt = sqrt(rSquared);
-  double otherAcc = G * other.mass() / rSquared;
-  double scaledAcc = otherAcc / rSqrt;
+  double totalAcc = G * other.mass() / rSquared;
+  double scaledAcc = totalAcc / rSqrt;
   accX += coorXDiff * scaledAcc;
   accY += coorYDiff * scaledAcc;
 }
@@ -59,6 +59,14 @@ explicitEulerTick(const PlanetData& stepCond, double simTick,
 
     nextStep[i].setCoordinate(coorX, coorY);
     nextStep[i].setVelocity(velX, velY);
+
+    /*
+    printf("DEBUG: %lu: cur vel: %.gx%.g, pos: %gx%g, acc: %.gx%.g, new vel: %.gx%.g, new pos: %.gx%.g\n", 
+      i, planet.velocity()[0], planet.velocity()[1], 
+      planet.coordinate()[0], planet.coordinate()[1], 
+      accX, accY, nextStep[i].velocity()[0], nextStep[i].velocity()[1], 
+      nextStep[i].coordinate()[0], nextStep[i].coordinate()[1]);
+    */
   }
 }
 
