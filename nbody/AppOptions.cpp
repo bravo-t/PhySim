@@ -11,7 +11,7 @@ processOptions(int argc, char** argv)
 {
   AppOptions opts;
   int c;
-  while ((c = getopt (argc, argv, "w:h:f:r:t:s")) != -1) {
+  while ((c = getopt (argc, argv, "w:h:f:r:t:s:")) != -1) {
     switch (c) {
       case 'w':
         opts._screenWidth = atoi(optarg);

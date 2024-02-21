@@ -85,7 +85,7 @@ int main(int argc, char** argv)
 
   size_t warpTick = opts._warpTick;
 
-  printf("Start simulation\n");
+  printf("Starting simulation with warpTick = %lu, simTickPerSecond = %lu\n", warpTick, opts._simTick);
   while (!WindowShouldClose()) {
     for (size_t w=0; w<warpTick; ++w) {
       univserse.simulate(simulator);

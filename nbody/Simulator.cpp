@@ -17,7 +17,7 @@ updateAcceleration(const Planet& planet, const Planet& other,
   double coorYDiff = other.coordinate()[1] - planet.coordinate()[1];
   double rSquared = coorXDiff * coorXDiff + coorYDiff * coorYDiff;
   double rSqrt = sqrt(rSquared);
-  double totalAcc = G * other.mass() / rSquared;
+  double totalAcc = other.mass() / rSquared;
   double scaledAcc = totalAcc / rSqrt;
   accX += coorXDiff * scaledAcc;
   accY += coorYDiff * scaledAcc;
@@ -36,6 +36,8 @@ acceleration(size_t planetId, const PlanetData& stepCond,
     const Planet& other = stepCond[i];
     updateAcceleration(planet, other, accX, accY);
   }
+  accX *= G;
+  accY *= G;
 }
 
 void
