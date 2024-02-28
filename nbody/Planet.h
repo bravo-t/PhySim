@@ -30,6 +30,7 @@ class Planet {
     const double* coordinate() const { return _coordinate; }
     const double* velocity() const { return _velocity; }
     double mass() const {return _mass;}
+    size_t id() const { return _id; }
   
   private:
     size_t _id = static_cast<size_t>(-1);

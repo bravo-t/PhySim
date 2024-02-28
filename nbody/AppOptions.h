@@ -1,6 +1,8 @@
 #ifndef __NBD_APPOPT_H__
 #define __NBD_APPOPT_H__
 
+#include "Simulator.h"
+
 namespace NBody {
 
 struct AppOptions {
@@ -11,7 +13,9 @@ struct AppOptions {
   size_t _fps = 60;
   size_t _warpTick = 1000;
   /// Simulator options
-  size_t _simTick = 1;
+  SimulationMethod _simMethod = SimulationMethod::Direct;
+  double _simTick = 1;
+  double _simBHTheta = 0.5;
   /// GUI options
   size_t _circleSize = 2;
 };

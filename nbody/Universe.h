@@ -15,6 +15,7 @@ class Universe {
     std::string planetName(size_t planetId) const { return _planetNames[planetId]; }
     void simulate(const Simulator& sim);
     std::deque<Planet> planetData() const { return _planetData; }
+    Planet planet(size_t planetId) const { return _planetData[planetId]; }
     double radius() const { return _radius; }
 
   private:

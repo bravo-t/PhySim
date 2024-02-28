@@ -9,9 +9,6 @@ namespace NBody {
 
 class Universe;
 
-void rasterize(size_t width, size_t height, const Universe& universe, Color* pixels);
-
-
 void
 drawFrame(size_t width, size_t height, 
           const Universe& universe, 

@@ -79,20 +79,21 @@ int main(int argc, char** argv)
   */ 
   SetTargetFPS(opts._fps);
 
-  ::NBody::Universe univserse(opts._worldFile);
-  ::NBody::Simulator simulator;
+  ::NBody::Universe universe(opts._worldFile);
+  ::NBody::Simulator simulator(&universe, opts._simMethod);
   simulator.setSimTick(opts._simTick);
+  simulator.setBHTheta(opts._simBHTheta);
 
   size_t warpTick = opts._warpTick;
 
-  printf("Starting simulation with warpTick = %lu, simTickPerSecond = %lu\n", warpTick, opts._simTick);
+  printf("Starting simulation with warpTick = %lu, simTickPerSecond = %.3f\n", warpTick, opts._simTick);
   while (!WindowShouldClose()) {
     for (size_t w=0; w<warpTick; ++w) {
-      univserse.simulate(simulator);
+      universe.simulate(simulator);
     }
 
-    ::NBody::drawFrame(screenWidth, screenHeight, univserse, renderData, camera, opts._circleSize);
-    //::NBody::rasterize(opts._screenWidth, opts._screenHeight, univserse, pixels);
+    ::NBody::drawFrame(screenWidth, screenHeight, universe, renderData, camera, opts._circleSize);
+    //::NBody::rasterize(opts._screenWidth, opts._screenHeight, universe, pixels);
 
     BeginDrawing();
       ClearBackground(BLACK);
@@ -244,13 +245,13 @@ main(int argc, char** argv)
   
   SetTargetFPS(opts._fps);
 
-  ::NBody::Universe univserse(opts._worldFile);
+  ::NBody::Universe universe(opts._worldFile);
   ::NBody::Simulator simulator;
 
   printf("Start simulation\n");
   while (!WindowShouldClose()) {
-    univserse.simulate(simulator);
-    ::NBody::rasterize(opts._screenWidth, opts._screenHeight, univserse, pixels);
+    universe.simulate(simulator);
+    ::NBody::rasterize(opts._screenWidth, opts._screenHeight, universe, pixels);
 
     pixels[0] = RED;
     pixels[1] = RED;

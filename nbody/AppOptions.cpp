@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include <cstdio>
 #include <cctype>
+#include <cstring>
 #include "AppOptions.h"
 
 namespace NBody {
@@ -11,7 +12,7 @@ processOptions(int argc, char** argv)
 {
   AppOptions opts;
   int c;
-  while ((c = getopt (argc, argv, "w:h:f:r:t:s:")) != -1) {
+  while ((c = getopt (argc, argv, "w:h:f:r:t:s:m:a:")) != -1) {
     switch (c) {
       case 'w':
         opts._screenWidth = atoi(optarg);
@@ -26,10 +27,21 @@ processOptions(int argc, char** argv)
         opts._warpTick = atoi(optarg);
         break;
       case 't':
-        opts._simTick = atoi(optarg);
+        opts._simTick = atof(optarg);
+        break;
+      case 'a':
+        opts._simBHTheta = atof(optarg);
         break;
       case 's':
         opts._circleSize = atoi(optarg);
+        break;
+      case 'm':
+        if (strcmp(optarg, "BarnesHut") == 0 ||
+            strcmp(optarg, "BHTree") == 0) {
+          opts._simMethod = SimulationMethod::BarnesHutAlgorithm;
+        } else {
+          opts._simMethod = SimulationMethod::Direct;
+        }
         break;
       case '?':
         if (optopt == 'w' || optopt == 'h' || optopt == 'f' || optopt == 'r' || optopt == 's')
